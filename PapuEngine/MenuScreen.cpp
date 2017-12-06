@@ -2,6 +2,10 @@
 #include "ScreenIndices.h"
 #include "Game.h"
 #include <iostream>
+#include <iostream>
+#include "ResourceManager.h"
+#include <random>
+#include <ctime>
 
 MenuScreen::MenuScreen(Window* window) :
 	_window(window), btnGameClicked(false)
@@ -9,9 +13,6 @@ MenuScreen::MenuScreen(Window* window) :
 	_screenIndex = SCREEN_INDEX_MENU;
 }
 
-void MenuScreen::initGUI() {
-
-}
 
 void MenuScreen::initSystem() {
 	_program.compileShaders("Shaders/colorShaderVert.txt",
@@ -24,6 +25,42 @@ void MenuScreen::initSystem() {
 
 MenuScreen::~MenuScreen()
 {
+}
+
+void  MenuScreen::drawHUD() {
+	GLuint pLocation =
+		_program.getUniformLocation("P");
+
+	glm::mat4 cameraMatrix = _hudCamera.getCameraMatrix();
+	glUniformMatrix4fv(pLocation, 1, GL_FALSE, &(cameraMatrix[0][0]));
+
+	char buffer[256];
+
+	_hudBatch.begin();
+
+	sprintf_s(buffer, "JUGAR");
+	_spriteFont->draw(_hudBatch, buffer, glm::vec2(435, 305),
+		glm::vec2(0.5), 0.0f, ColorRGBA(255, 255, 255, 255));
+
+	sprintf_s(buffer, "Busca el tesoro haciendo click en los circulos.");
+	_spriteFont->draw(_hudBatch, buffer, glm::vec2(0, 200),
+		glm::vec2(0.35), 0.0f, ColorRGBA(255, 255, 255, 255));
+
+	sprintf_s(buffer, "Ten cuidado, hay minas en el camino.");
+	_spriteFont->draw(_hudBatch, buffer, glm::vec2(0, 180),
+		glm::vec2(0.35), 0.0f, ColorRGBA(255, 255, 255, 255));
+
+	sprintf_s(buffer, "TRABAJO FINAL");
+	_spriteFont->draw(_hudBatch, buffer, glm::vec2(0, 50),
+		glm::vec2(0.5), 0.0f, ColorRGBA(255, 255, 255, 255));
+
+	sprintf_s(buffer, "LUIS MORON");
+	_spriteFont->draw(_hudBatch, buffer, glm::vec2(0, 0),
+		glm::vec2(0.5), 0.0f, ColorRGBA(255, 255, 255, 255));
+
+	_hudBatch.end();
+	_hudBatch.renderBatch();
+
 }
 
 void MenuScreen::build() 
@@ -44,12 +81,23 @@ void MenuScreen::onEntry() {
 	_camera2D.init(_window->getScreenWidth(), _window->getScreenHeight());
 	_camera2D.setPosition(glm::vec2(_window->getScreenWidth() / 2.0f, _window->getScreenHeight() / 2.0f));
 	_spriteBacth.init();
+	_hudBatch.init();
+	initGUI();
 	_background = new Background("Textures/naves/menu.png");
 	_button = new Button("Textures/naves/menu_button.png");
+
+	_hudCamera.init(_window->getScreenWidth(),
+		_window->getScreenHeight());
+	_hudCamera.setPosition(
+		glm::vec2(_window->getScreenWidth() / 2.0f,
+			_window->getScreenHeight() / 2.0f));
+
+	_spriteFont = new SpriteFont("Fonts/arial.ttf", 64);
 }
 
 void MenuScreen::update() {
 	_camera2D.update();
+	_hudCamera.update();
 	if (_game->_inputManager.isKeyDown(SDL_BUTTON_LEFT)) {
 		if (_button->clicked(_game->_inputManager.getMouseCoords()) && !btnGameClicked) {
 			btnGameClicked = true;
@@ -60,6 +108,7 @@ void MenuScreen::update() {
 	}
 	checkInput();
 }
+
 
 void MenuScreen::draw() {
 	glClearDepth(1.0);
@@ -83,8 +132,12 @@ void MenuScreen::draw() {
 	_spriteBacth.end();
 	_spriteBacth.renderBatch();
 
+	drawHUD();
+	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, 0);
 	_program.unuse();
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
 int MenuScreen::getNextScreen()const {

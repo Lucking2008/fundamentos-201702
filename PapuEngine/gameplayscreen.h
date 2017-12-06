@@ -14,6 +14,10 @@
 #include "EnemyShip.h"
 #include "Vullet.h"
 
+#include "Sign.h"
+#include "Mine.h"
+#include "Treasure.h"
+
 class GamePlayScreen : public IGameScreen
 {
 private:
@@ -21,10 +25,8 @@ private:
 	Camera2D _camera2d;
 	Background* _background;
 	Window* _window = nullptr;
-	Ship* _ship;
 	SpriteBacth _spriteBatch;
 	GLTexture _texture;
-	vector<Vullet*> _bullets;
 	SpriteFont* _spriteFont;
 	Camera2D _hudCamera;
 	SpriteBacth _hudBatch;
@@ -32,7 +34,22 @@ private:
 	int _score;
 	int _bullet;
 	void drawHUD();
-	vector<EnemyShip*> _enemies;
+
+	bool _flagClick;
+	int _boardX;
+	int _boardY;
+	int _mineSize;
+	int _mineSpace;
+	int _boardSize;
+	int _state;
+	vector<vector<Sign*>> _signs;
+	vector<vector<Mine*>> _mines;
+	vector<vector<int>> _table;
+	vector<vector<bool>> _revealed;
+	int _treasureI;
+	int _treasureJ;
+	Treasure* _treasure;
+
 public:
 	GamePlayScreen(Window* window);
 	~GamePlayScreen();
@@ -50,5 +67,9 @@ public:
 	virtual int getNextScreen() const override;
 	virtual int getPreviousScreen() const override;
 	virtual void checkInput() override;
+
+private:
+	void createBoard(int clickPosI, int clickPosJ);
+	int getMinesAround(int i, int j);
 };
 

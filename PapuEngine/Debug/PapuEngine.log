@@ -1,8 +1,11 @@
 ﻿  GamePlayScreen.cpp
-c:\users\proyecto\documents\funda\papuengine\gameplayscreen.cpp(111): warning C4244: 'initializing': conversion from 'Uint32' to 'float', possible loss of data
-c:\users\proyecto\documents\funda\papuengine\gameplayscreen.cpp(112): warning C4244: 'initializing': conversion from 'Uint32' to 'float', possible loss of data
-c:\users\proyecto\documents\funda\papuengine\gameplayscreen.cpp(119): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\proyecto\documents\funda\papuengine\gameplayscreen.cpp(125): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-c:\users\proyecto\documents\funda\papuengine\gameplayscreen.cpp(127): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-  PapuEngine.vcxproj -> C:\Users\Proyecto\Documents\funda\Debug\PapuEngine.exe
-  PapuEngine.vcxproj -> C:\Users\Proyecto\Documents\funda\Debug\PapuEngine.pdb (Partial PDB)
+d:\funda tf\fundamentos-201702\papuengine\gameplayscreen.cpp(110): warning C4018: '<': no coinciden signed/unsigned
+d:\funda tf\fundamentos-201702\papuengine\gameplayscreen.cpp(112): warning C4018: '<': no coinciden signed/unsigned
+d:\funda tf\fundamentos-201702\papuengine\gameplayscreen.cpp(114): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+d:\funda tf\fundamentos-201702\papuengine\gameplayscreen.cpp(170): warning C4244: 'inicializando': conversión de 'Uint32' a 'float'; posible pérdida de datos
+d:\funda tf\fundamentos-201702\papuengine\gameplayscreen.cpp(171): warning C4244: 'inicializando': conversión de 'Uint32' a 'float'; posible pérdida de datos
+d:\funda tf\fundamentos-201702\papuengine\gameplayscreen.cpp(322): warning C4244: 'argumento': conversión de 'time_t' a 'unsigned int'; posible pérdida de datos
+d:\funda tf\fundamentos-201702\papuengine\gameplayscreen.cpp(336): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+d:\funda tf\fundamentos-201702\papuengine\gameplayscreen.cpp(352): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+  PapuEngine.vcxproj -> D:\Funda TF\fundamentos-201702\Debug\PapuEngine.exe
+  PapuEngine.vcxproj -> D:\Funda TF\fundamentos-201702\Debug\PapuEngine.pdb (Partial PDB)
